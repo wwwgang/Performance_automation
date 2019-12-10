@@ -1,0 +1,3 @@
+locust -f locust_test.py
+locust
+locust -f locust_test.py --no-web -c 1 -r 1

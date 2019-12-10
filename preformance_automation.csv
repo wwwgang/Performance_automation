@@ -1,0 +1,5 @@
+id,url,headers,method,data
+,/,,GET,
+,/login/123&123,,GET,
+,/indexx,,GET,
+,/loging,{'user-agent': 'my-app/0.0.1'},POST,{'nihao':'123'}
