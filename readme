@@ -1,7 +1,10 @@
 在preformance_automation.csv中添加接口信息
 
-locust -f locust_test.py
 locust --master
 locust --slave --master-host=x.x.x.x
 
+web页面
+http://localhost:8089/
+
+需要配合以下使用
 pip install git+https://github.com/wg18618262234/locust.git
