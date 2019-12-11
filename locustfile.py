@@ -1,6 +1,5 @@
 from locust import HttpLocust, TaskSet, task
 from unit.csvController import opencsv_preformance_automation, writecsv_error_info
-from pymysql import escape_string
 import time
 
 error_info = []
@@ -24,7 +23,7 @@ class WebsiteTasks(TaskSet):
             if req.status_code != 200:
                 info.append(count)
                 count += 1
-                info.append(escape_string(url))
+                info.append(url)
                 info.append('GET')
                 info.append(headers)
                 info.append(data)
