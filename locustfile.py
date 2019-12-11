@@ -1,12 +1,13 @@
 from locust import HttpLocust, TaskSet, task
-import requests
-from unit.csvController import opencsv
+from unit.csvController import opencsv_preformance_automation, writecsv_error_info
+from pymysql import escape_string
+import time
 
+error_info = []
 count = 1
 
 
 class WebsiteTasks(TaskSet):
-    error_info = []
 
     def on_start(self):
         pass
@@ -14,26 +15,28 @@ class WebsiteTasks(TaskSet):
     @task
     def request_get(self):
         global count
-        for i in opencsv()['GET']:
+        for i in opencsv_preformance_automation()['GET']:
             info = []
             url = i[1]
             headers = i[2]
+            data = i[4]
             req = self.client.get(url=url, headers=headers)
             if req.status_code != 200:
                 info.append(count)
                 count += 1
-                info.append(req.url)
+                info.append(escape_string(url))
                 info.append('GET')
                 info.append(headers)
-                info.append('/NULL')
-                info.append(req.headers)
+                info.append(data)
+                info.append(req.headers.__str__())
                 info.append(req.text)
-                self.error_info.append(info)
+                info.append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
+                error_info.append(info)
 
     @task
     def request_post(self):
         global count
-        for i in opencsv()['POST']:
+        for i in opencsv_preformance_automation()['POST']:
             info = []
             url = i[1]
             headers = eval(i[2])
@@ -42,13 +45,17 @@ class WebsiteTasks(TaskSet):
             if req.status_code != 200:
                 info.append(count)
                 count += 1
-                info.append(req.url)
+                info.append(url)
                 info.append('POST')
                 info.append(headers)
                 info.append(data)
-                info.append(req.headers)
+                info.append(req.headers.__str__())
                 info.append(req.text)
-                self.error_info.append(info)
+                info.append(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
+                error_info.append(info)
+
+    def on_stop(self):
+        writecsv_error_info(error_info)
 
 
 class WebsiteUser(HttpLocust):

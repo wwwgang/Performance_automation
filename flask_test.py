@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 
 @app.route('/login/<username>&<password>')
-def login(username, password):
+def login(username, passwod):
     if username == '123' and password == '123':
         return json.loads(json.dumps({'code': 1}))
     else:
