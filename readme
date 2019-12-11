@@ -12,3 +12,6 @@ pip install git+https://github.com/wg18618262234/locust.git
 访问web查看并开始压测，web入口http://masterip:8089/
 第五步：
 压测结束在web页面导出报告（目前一缺点，分布式master分发给slave任务后生成的error_info.csv信息只能够存在slave客户机上，还无法收回csv文件）
+
+官网：https://locust.io/
+官方文档：https://docs.locust.io/en/stable/
